@@ -1,9 +1,9 @@
 <h1 align="center">Hi 👋, I'm Jonathan Cho</h1>
 <h3 align="center">A passionate frontend developer from Olympia, WA</h3>
 
-- 🔭 I’m currently working on [a AI powered Icon generator](https://github.com/ShakeCoolMitt/dall-e)
+- 🔭 I’m currently working on [a AI powered Icon generator](https://dall-e-eta-eight.vercel.app/)
 
-- 👨‍💻 All of my projects are available at [https://github.com/jon-jc](https://github.com/jon-jc)
+- 👨‍💻 All of my projects are available on my [Portfolio](https://my-portfolio-sage-tau-11.vercel.app/)
 
 - 💬 Ask me about **React, Next.js**
 
