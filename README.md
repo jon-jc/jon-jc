@@ -1,7 +1,7 @@
 <h1 align="center">Hi 👋, I'm Jonathan Cho</h1>
 <h3 align="center">A passionate frontend developer from Olympia, WA</h3>
 
-- 🔭 I’m currently working on [a AI powered Icon generator](https://dall-e-eta-eight.vercel.app/) and [a Network Package Sniffer(TCP/UDP/IP)](https://github.com/jon-jc/packet-sniffer) 
+- 🔭 I’m currently working on [a AI powered Icon generator](https://dall-e-eta-eight.vercel.app/) and [a Network Packet Sniffer(TCP/UDP/IP)](https://github.com/jon-jc/packet-sniffer) 
 
 - 👨‍💻 All of my projects are available on my [Portfolio](https://my-portfolio-sage-tau-11.vercel.app/)
 
