@@ -5,7 +5,7 @@
 
 - 👨‍💻 All of my projects are available on my [Portfolio](https://my-portfolio-sage-tau-11.vercel.app/)
 
-- 💬 Ask me about **React, Next.js, Python, or C++**
+- 💬 Ask me about **React, Next.js, Python, or C#**
 
 - 📫 How to reach me **Jonathancho.jc@gmail.com**
 
