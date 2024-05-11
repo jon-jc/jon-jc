@@ -19,4 +19,4 @@
 
 <p><img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=jon-jc&show_icons=true&locale=en&layout=compact&exclude_repo=(https://github.com/jon-jc/ml-tradingbot)" alt="jon-jc" /></p>
 
-<a href="https://git.io/streak-stats"><img src="https://streak-stats.demolab.com?user=Jon-JC&theme=dark&hide_border=true&exclude_days=Sun%2CFri%2CSat" alt="GitHub Streak" /></a>
+<a href="https://git.io/streak-stats"><img src="https://streak-stats.demolab.com?user=Jon-JC&theme=dark&hide_border=true&exclude_days=Fri" alt="GitHub Streak" /></a>
