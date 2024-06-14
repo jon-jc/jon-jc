@@ -1,5 +1,5 @@
 <h1 align="center">Hi 👋, I'm Jonathan Cho</h1>
-<h3 align="center">A passionate frontend developer based in Los Angeles, CA/h3>
+<h3 align="center">A passionate frontend developer based in Los Angeles, CA</h3>
 
 - 🔭 I’m currently working on [a AI powered Icon generator](https://dall-e-eta-eight.vercel.app/) and [a Sentiment-Based Algorithmic Trading System](https://github.com/jon-jc/ml-tradingbot) 
 
