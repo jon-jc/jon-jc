@@ -1,7 +1,7 @@
 <h1 align="center">Hi 👋, I'm Jonathan Cho</h1>
 <h3 align="center">A passionate frontend developer based in Los Angeles, CA</h3>
 
-- 🔭 I’m currently working on [a AI powered Icon generator](https://dall-e-eta-eight.vercel.app/) and [a Sentiment-Based Algorithmic Trading System](https://github.com/jon-jc/ml-tradingbot) 
+- 🔭 I’m currently working on [Avant Garde Fashion Ecommerce App](https://github.com/jon-jc/fashion) and [a AI powered Icon generator](https://dall-e-eta-eight.vercel.app/)
 
 - 👨‍💻 All of my projects are available on my [Portfolio](https://my-portfolio-sage-tau-11.vercel.app/)
 
