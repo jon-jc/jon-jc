@@ -79,9 +79,15 @@ An end-to-end environmental data system, modeled on how spill-response programs 
 ## 📊 GitHub
 
 <p align="left">
-  <img src="https://streak-stats.demolab.com?user=jon-jc&theme=transparent&hide_border=true" height="165" alt="Contribution streak" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=jon-jc&layout=compact&theme=transparent&hide_border=true&langs_count=8" height="165" alt="Top languages" />
+  <img src="https://streak-stats.demolab.com?user=jon-jc&theme=transparent&hide_border=true" height="200" alt="Contribution streak" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/top-languages-dark.svg" />
+    <img src="assets/top-languages-light.svg" height="200" alt="Most used languages across my public repositories" />
+  </picture>
 </p>
+
+<sub>The language card is generated from the GitHub API and committed to this repo by
+<a href=".github/workflows/language-card.yml">a scheduled workflow</a> — no third-party stats service to rate-limit or go down.</sub>
 
 ---
 
