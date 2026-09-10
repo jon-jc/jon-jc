@@ -1,7 +1,7 @@
 <h1 align="center">Jonathan Cho</h1>
 
 <p align="center">
-  <b>Backend &amp; AI systems engineer — English / 日本語 </b>
+  <b>Backend &amp; AI systems engineer — English / 日本語</b>
 </p>
 
 <p align="center">
@@ -9,16 +9,16 @@
 </p>
 
 <p align="center">
-  Expertising in TypeScript, React, Streaming speech pipelines in Python, event-driven ingestion in Go, .NET services over<br>
-  well-modeled data — and the realtime clients, maps and dashboards on top of them.<br>
-  </b>
+  TypeScript and React across the front end · streaming speech pipelines in Python ·<br>
+  event-driven ingestion in Go · .NET services over well-modeled data —<br>
+  and the realtime clients, maps and dashboards that sit on top of them.
 </p>
 
 <p align="center">
   <a href="https://jon-jc.vercel.app"><img src="https://img.shields.io/badge/Portfolio-111111?style=flat-square&logo=vercel&logoColor=white" alt="Portfolio" /></a>
   <a href="https://linkedin.com/in/jon-jc"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
   <a href="mailto:Jonathancho.jc@gmail.com"><img src="https://img.shields.io/badge/Email-EA4335?style=flat-square&logo=gmail&logoColor=white" alt="Email" /></a>
-  <img src="https://img.shields.io/badge/日本語%20%2F%20English-4c8c4a?style=flat-square" alt="日本語 / English" />
+  <img src="https://img.shields.io/badge/English%20%2F%20日本語-4c8c4a?style=flat-square" alt="English / 日本語" />
 </p>
 
 ---
@@ -84,6 +84,33 @@ protected environment, with Caddy terminating TLS and everything else on a priva
 
 ---
 
+## League Counters — multi-region match data, aggregated per patch
+
+**[github.com/jon-jc/league-counters](https://github.com/jon-jc/league-counters)** · `TypeScript` `Next.js 16` `React 19` `Tailwind v4`
+
+A counter-pick and tier tracker built on ranked match data pulled from every Riot platform and
+recomputed as each patch settles. The interesting part isn't the UI — it's that most sites in this
+category publish numbers that are statistically meaningless, and this one doesn't.
+
+**Small samples are shrunk, not published.** Champion win rates regress toward a prior worth 150
+pseudo-games and matchups toward 40, with hard floors of 20 games to rank and 8 to show a matchup.
+A 71% win rate over nine games is noise, and presenting it as a recommendation is the whole failure
+mode of the genre.
+
+**Matchups are win-rate *deltas*, not raw percentages.** A champion that wins 54% of all games is not
+countering anything by winning 54% of a matchup — the baseline has to come out first.
+
+**Merging regions is what makes the data usable.** The largest single region scores 722 lanes; the
+merged global view scores **3,090**, which is the difference between "no data for this matchup" and
+an answer. Tier score is `0.72·z(win rate) + 0.28·z(presence)`, so popularity informs the ranking
+without letting a niche pick that quietly wins get buried.
+
+**Ingestion respects the source.** A token bucket holds to Riot's 20 req/s and 100-per-2-minutes
+limits across concurrent workers, so a full multi-region crawl runs to completion instead of getting
+throttled halfway through.
+
+---
+
 ## Fluxgate — distributed telemetry ingestion
 
 **[github.com/jon-jc/fluxgate](https://github.com/jon-jc/fluxgate)** · `Go` `GCP Pub/Sub` `PostgreSQL` `Cloud Run` `Terraform` `OpenTelemetry`
@@ -135,39 +162,42 @@ stop the two hosts drifting apart.
 
 ---
 
-## Also worth a look
+## More TypeScript & React
 
 | Project | What it does | Stack |
 |---|---|---|
-| **[NEO TOKYO TRANSIT](https://tokyo-train-map.vercel.app)** · [src](https://github.com/jon-jc/tokyo-train-map) | 22 lines and 269 stations of Tokyo rail in explorable 3D — JR, Metro, Toei, Yurikamome, Rinkai — trains animated bidirectionally against their schedules. Doubles as a working journey planner: Dijkstra with realistic transfer penalties and exit-level wayfinding, bilingual throughout. | `TypeScript` `three.js` `R3F` `zustand` |
-| **[ChordLab](https://chord-finder-ten.vercel.app)** · [src](https://github.com/jon-jc/chord-finder) | Music analysis entirely in the browser, nothing uploaded. Chord recognition over 145 states smoothed by a Viterbi decoder, Krumhansl–Schmuckler key detection, note-level transcription to playable guitar tab, MIDI export. FFT, chromagram, onset detection and pitch estimation written from scratch — **zero runtime dependencies**. | `TypeScript` `Web Audio` `Web Workers` `DSP` |
+| **[NEO TOKYO TRANSIT](https://tokyo-train-map.vercel.app)** · [src](https://github.com/jon-jc/tokyo-train-map) | 22 lines and 269 stations of Tokyo rail in explorable 3D — JR, Metro, Toei, Yurikamome, Rinkai — trains animated bidirectionally against their schedules. Doubles as a working journey planner: Dijkstra with realistic transfer penalties and exit-level wayfinding, bilingual throughout. | `Next.js 15` `React 19` `three.js` `R3F` `zustand` |
+| **[ChordLab](https://chord-finder-ten.vercel.app)** · [src](https://github.com/jon-jc/chord-finder) | Music analysis entirely in the browser, nothing uploaded. Chord recognition over 145 states smoothed by a Viterbi decoder, Krumhansl–Schmuckler key detection, note-level transcription to playable guitar tab, MIDI export. FFT, chromagram, onset detection and pitch estimation written from scratch — **zero runtime dependencies**, all of it off the main thread in a Web Worker. | `TypeScript` `Web Audio` `Web Workers` `DSP` |
+| **[LanguageRooms](https://github.com/jon-jc/language-rooms)** | Persistent practice rooms by language and CEFR level on a self-hosted LiveKit SFU: multi-party video and voice, shared whiteboard with photo upload, host controls, active-speaker detection and connection-quality indicators. Moderation, reporting and a review queue are a first-class subsystem rather than an afterthought. | `Next.js` `LiveKit` `Prisma` `Postgres` `JWT` |
+| **[Tokyo Move-in Cost Calculator](https://apartmentfeesjapan.vercel.app)** · [src](https://github.com/jon-jc/apartmentfeesjapan) | Japanese leases front-load 4.5–6 months of rent. This models the entire 初期費用 stack — deposit, key money, agency, guarantor, insurance — against a choropleth of all 23 wards on live SUUMO / HOME'S data. Ward boundaries are compiled to ~28 KB of precomputed SVG paths at build time; 23 ward guides regenerate daily on ISR. Fully bilingual. | `Next.js` `TypeScript` `ISR` `i18n` |
+| **[Portfolio](https://jon-jc.vercel.app)** · [src](https://github.com/jon-jc/portfolio) | Content-driven site where projects, experience and skills are data — routes, sitemaps, metadata and per-project social cards all generate from it at build time. Command palette with fuzzy matching, pointer-tracking cursor, scroll-triggered reveals, hand-drawn SVG posters from seeded randomness, a print-optimized resume route. Every route prerendered, no client-side fetching. | `Next.js 16` `React 19` `TypeScript` `Motion` |
 
 ---
 
 ## What I work with
 
-**Backend & data** — Go, C#, ASP.NET Core, EF Core, Python, FastAPI, Node.js, PostgreSQL, SQL Server, Redis, SQLite, REST/OpenAPI, event-driven architecture, ETL pipeline design
+**Front end** — TypeScript, React 19, Next.js (App Router), Tailwind CSS, three.js, Motion, WebSocket & SSE, WebRTC/LiveKit, Web Audio & Web Workers, i18n, accessible and themeable UI
 
-**AI & audio** — streaming ASR, speaker diarization, LLM orchestration and guardrails, evaluation harnesses (CER/WER/DER, bootstrap CIs, regression gates), VAD and endpointing, DSP, Web Audio
+**Backend & data** — Go, C#, ASP.NET Core, EF Core, Python, FastAPI, Node.js, PostgreSQL, SQL Server, Redis, SQLite, Prisma, REST/OpenAPI, event-driven architecture, ETL pipeline design
 
-**GIS & visualization** — Leaflet, GeoJSON, spatial queries, coordinate-system validation, three.js, Chart.js
+**AI & audio** — streaming ASR, speaker diarization, LLM orchestration and guardrails, evaluation harnesses (CER/WER/DER, bootstrap CIs, regression gates), VAD and endpointing, DSP
 
-**Front end** — TypeScript, React, Next.js, Tailwind CSS, WebSocket & SSE, WebRTC, i18n, accessible and themeable UI
+**GIS & visualization** — Leaflet, GeoJSON, spatial queries, coordinate-system validation, choropleths, Chart.js
 
 **Delivery** — Docker, Terraform, GitHub Actions, GCP (Pub/Sub, Cloud Run), AWS (ECS Fargate), Vercel, xUnit, pytest, Vitest, integration & contract testing, fuzzing
 
 <p align="left">
+<a href="https://www.typescriptlang.org/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" width="40" height="40" alt="TypeScript"/></a>
+<a href="https://reactjs.org/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" width="40" height="40" alt="React"/></a>
+<a href="https://nextjs.org/" target="_blank"><img src="https://cdn.worldvectorlogo.com/logos/nextjs-2.svg" width="40" height="40" alt="Next.js"/></a>
+<a href="https://tailwindcss.com/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg" width="40" height="40" alt="Tailwind CSS"/></a>
+<a href="https://threejs.org/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/threejs/threejs-original.svg" width="40" height="40" alt="three.js"/></a>
+<a href="https://nodejs.org/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" width="40" height="40" alt="Node.js"/></a>
 <a href="https://go.dev/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original-wordmark.svg" width="40" height="40" alt="Go"/></a>
 <a href="https://learn.microsoft.com/dotnet/csharp/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" width="40" height="40" alt="C#"/></a>
 <a href="https://dotnet.microsoft.com/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dotnetcore/dotnetcore-original.svg" width="40" height="40" alt=".NET"/></a>
 <a href="https://www.python.org/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" width="40" height="40" alt="Python"/></a>
 <a href="https://fastapi.tiangolo.com/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/fastapi/fastapi-original.svg" width="40" height="40" alt="FastAPI"/></a>
-<a href="https://www.typescriptlang.org/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" width="40" height="40" alt="TypeScript"/></a>
-<a href="https://reactjs.org/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" width="40" height="40" alt="React"/></a>
-<a href="https://nextjs.org/" target="_blank"><img src="https://cdn.worldvectorlogo.com/logos/nextjs-2.svg" width="40" height="40" alt="Next.js"/></a>
-<a href="https://threejs.org/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/threejs/threejs-original.svg" width="40" height="40" alt="three.js"/></a>
-<a href="https://tailwindcss.com/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg" width="40" height="40" alt="Tailwind CSS"/></a>
-<a href="https://nodejs.org/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" width="40" height="40" alt="Node.js"/></a>
 <a href="https://www.postgresql.org/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" width="40" height="40" alt="PostgreSQL"/></a>
 <a href="https://www.microsoft.com/sql-server" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/microsoftsqlserver/microsoftsqlserver-plain-wordmark.svg" width="40" height="40" alt="SQL Server"/></a>
 <a href="https://redis.io/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redis/redis-original-wordmark.svg" width="40" height="40" alt="Redis"/></a>
@@ -198,6 +228,6 @@ stop the two hosts drifting apart.
 ---
 
 <p align="center">
-  <i>Open to software engineering roles in Japan — 日英バイリンガル対応可。<br>
+  <i>Open to software engineering roles in the US and Japan — 日英バイリンガル対応可。<br>
   <a href="mailto:Jonathancho.jc@gmail.com">Jonathancho.jc@gmail.com</a> · <a href="https://linkedin.com/in/jon-jc">LinkedIn</a> · <a href="README.ja.md">日本語版</a></i>
 </p>
