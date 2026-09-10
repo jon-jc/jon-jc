@@ -86,7 +86,7 @@ protected environment, with Caddy terminating TLS and everything else on a priva
 
 ## League Counters — multi-region match data, aggregated per patch
 
-**[github.com/jon-jc/league-counters](https://github.com/jon-jc/league-counters)** · `TypeScript` `Next.js 16` `React 19` `Tailwind v4`
+**[league-counters.vercel.app](league-counters.vercel.app)** · `TypeScript` `Next.js 16` `React 19` `Tailwind v4`
 
 A counter-pick and tier tracker built on ranked match data pulled from every Riot platform and
 recomputed as each patch settles. The interesting part isn't the UI — it's that most sites in this
