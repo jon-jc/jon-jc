@@ -23,37 +23,33 @@
 
 ---
 
-## 声 koe — bilingual voice AI, assembled
+## Kotoba Studio · ことば — bilingual voice AI and an agent desktop
 
-**[github.com/jon-jc/koe-harness](https://github.com/jon-jc/koe-harness)** · `Python 3.11` `TypeScript` `FastAPI` `WebSocket` `Docker` `Terraform`
+**[github.com/jon-jc/kotoba-studio](https://github.com/jon-jc/kotoba-studio)** · [Screenshots & setup](https://github.com/jon-jc/kotoba-studio#english) · `Python` `TypeScript` `React` `PySide6` `ONNX`
 
-Streaming ASR, speaker diarization and an LLM writing 議事録 (meeting minutes), orchestrated behind
-one plugin kernel and held to explicit **latency, cost and quality budgets**. A voice product is never
-one model — it's three models and a great deal of glue, and the glue is the engineering.
+A Windows desktop workspace that connects Japanese and English speech to reviewable text,
+AI conversations and development tools. I extended DeepSeek Harness and integrated OpenWhispr
+components to bring voice input, multiple model providers and desktop workflows into one application.
 
-**Japanese is a design constraint, not a locale string.** WER is close to meaningless for a language
-with no word spaces, so scoring is CER and every WER carries the name of the tokenizer that produced
-it. 漢数字 conversion is gated on MeCab POS tags, because `一般`, `一緒` and `十分` all open with
-numeral kanji and none are numbers. Endpointing gives Japanese 900 ms of silence tolerance against
-English's 650 — JA speakers pause *before* sentence-final particles, which is where negation and
-tense live, so an English-tuned endpointer removes the verb.
+**Model selection belongs to each conversation.** Independent chats can use OpenAI, Anthropic Claude,
+Kimi, DeepSeek or local models concurrently. Provider and model controls are separate, the chat menu
+shows configured providers, and each conversation preserves its own selection. A code viewer,
+terminal and plugin system keep the surrounding development workflow close to the agent.
 
-**Hallucination detection reduced to a string operation.** The minutes schema requires a verbatim
-`source_quote` on every claim, so verification is a substring search: either the quote is in the
-transcript or it isn't. No judge model, no second call, effectively zero cost. Unsupported claims are
-*dropped*, not flagged — an action item marked "unverified" still lands in someone's backlog.
+**Local inference has an explicit setup flow.** English defaults to Parakeet; Japanese uses
+Kotoba-Whisper, with other Whisper models available. Missing weights trigger a download prompt and
+progress display before transcription starts. GGUF support through llama.cpp, plus Ollama and
+LM Studio connections, lets users choose local execution alongside cloud APIs.
 
-**Model choice is a runtime decision.** Backends register carrying their cost, speed and expected
-quality as data; a request declares `Budget.realtime()` or `Budget.accurate()`, and the router
-eliminates on hard constraints before ranking what survives. Measured error rates replace vendor
-priors, so routing converges on reality rather than marketing.
+**Voice stays reviewable before it becomes an action.** Capture a microphone, system audio or an
+application process; import a recording; or use a global hotkey for dictation at the cursor. Review
+names, numbers and intent before sending a transcript to an agent. Evaluation exposes Japanese CER,
+English WER, transcription latency and real-time factor against supplied reference text.
 
-**Uncertainty is quantified, not asserted.** Bootstrap confidence intervals on every number, paired
-permutation tests for A/B, resampling at the utterance level because character-level errors are
-correlated and independent resampling would produce intervals too narrow to be honest. CI gates fail
-on significant regressions, never on run-to-run noise.
-
-<sub>Voicing-aware VAD lifts precision <b>0.716 → 0.954</b> with recall unchanged and false alarms at 0.00/min · 917 tests · <code>mypy --strict</code> clean · eight CI jobs including a MeCab-present/absent matrix · ships as a Docker service, a FastAPI server and a Windows desktop app · runs fully offline against Ollama / LM Studio / llama.cpp with no API key</sub>
+**Delivery includes the desktop lifecycle.** The app ships as an installable Windows executable with
+English/Japanese controls, persistent chat views, user-selectable access policies and system-tray
+operation. Packaged-app checks cover actual Harness startup, workspace navigation, language switching
+and tray restoration, alongside focused UI and backend regression tests.
 
 ---
 
@@ -84,30 +80,31 @@ protected environment, with Caddy terminating TLS and everything else on a priva
 
 ---
 
-## League Counters — multi-region match data, aggregated per patch
+## NEO TOKYO TRANSIT — Tokyo rail, from graph to 3D interface
 
-**[https://league-counters.vercel.app](https://league-counters.vercel.app)** · `TypeScript` `Next.js 16` `React 19` `Tailwind v4`
+**[NEO TOKYO TRANSIT](https://tokyo-train-map.vercel.app/)** · [src](https://github.com/jon-jc/tokyo-train-map) · `TypeScript` `Next.js` `React` `three.js` `React Three Fiber` `zustand`
 
-A counter-pick and tier tracker built on ranked match data pulled from every Riot platform and
-recomputed as each patch settles. The interesting part isn't the UI — it's that most sites in this
-category publish numbers that are statistically meaningless, and this one doesn't.
+An explorable 3D map and journey planner spanning **22 lines and 269 stations** across JR,
+Tokyo Metro, Toei, Yurikamome and Rinkai. Elevated rail, underground lines and interchange stations
+form a layered city that can be searched, filtered and used to plan a trip in English or Japanese.
 
-**Small samples are shrunk, not published.** Champion win rates regress toward a prior worth 150
-pseudo-games and matchups toward 40, with hard floors of 20 games to rank and 8 to show a matchup.
-A 71% win rate over nine games is noise, and presenting it as a recommendation is the whole failure
-mode of the genre.
+**A transfer is part of the route's cost.** Dijkstra runs over a **station × line** graph, so changing
+lines incurs an explicit transfer penalty. Designated walking links connect nearby stations such as
+Tokyo and Otemachi. Results break the journey into line segments, stops, transfers and walking time,
+with curated exit guidance for the connections that need it.
 
-**Matchups are win-rate *deltas*, not raw percentages.** A champion that wins 54% of all games is not
-countering anything by winning 54% of a matchup — the baseline has to come out first.
+**The renderer and planner share geometry.** Rail lines are cached Catmull–Rom curves through station
+coordinates at their elevation layers. Animated trains and route highlights follow those same curves;
+selecting a journey dims unrelated lines and emphasizes its endpoints and interchanges. The visual
+interface stays connected to the underlying network model.
 
-**Merging regions is what makes the data usable.** The largest single region scores 722 lanes; the
-merged global view scores **3,090**, which is the difference between "no data for this matchup" and
-an answer. Tier score is `0.72·z(win rate) + 0.28·z(presence)`, so popularity informs the ranking
-without letting a niche pick that quietly wins get buried.
+**Navigation works through search as well as the map.** Japanese and romaji fuzzy search supports
+keyboard navigation. Station cards set an origin or destination, operator filters reduce visual
+clutter, and rail/subway views expose different layers of the network.
 
-**Ingestion respects the source.** A token bucket holds to Riot's 20 req/s and 100-per-2-minutes
-limits across concurrent workers, so a full multi-region crawl runs to completion instead of getting
-throttled halfway through.
+**The data model is tested alongside the interface.** Vitest checks dataset integrity, geographic
+projection and routing invariants; CI tests and builds the static application before deployment.
+Journey times are distance-based estimates, train movement is simulated, and exit guidance is curated.
 
 ---
 
@@ -166,7 +163,6 @@ stop the two hosts drifting apart.
 
 | Project | What it does | Stack |
 |---|---|---|
-| **[NEO TOKYO TRANSIT](https://tokyo-train-map.vercel.app)** · [src](https://github.com/jon-jc/tokyo-train-map) | 22 lines and 269 stations of Tokyo rail in explorable 3D — JR, Metro, Toei, Yurikamome, Rinkai — trains animated bidirectionally against their schedules. Doubles as a working journey planner: Dijkstra with realistic transfer penalties and exit-level wayfinding, bilingual throughout. | `Next.js 15` `React 19` `three.js` `R3F` `zustand` |
 | **[ChordLab](https://chord-finder-ten.vercel.app)** · [src](https://github.com/jon-jc/chord-finder) | Music analysis entirely in the browser, nothing uploaded. Chord recognition over 145 states smoothed by a Viterbi decoder, Krumhansl–Schmuckler key detection, note-level transcription to playable guitar tab, MIDI export. FFT, chromagram, onset detection and pitch estimation written from scratch — **zero runtime dependencies**, all of it off the main thread in a Web Worker. | `TypeScript` `Web Audio` `Web Workers` `DSP` |
 | **[LanguageRooms](https://github.com/jon-jc/language-rooms)** | Persistent practice rooms by language and CEFR level on a self-hosted LiveKit SFU: multi-party video and voice, shared whiteboard with photo upload, host controls, active-speaker detection and connection-quality indicators. Moderation, reporting and a review queue are a first-class subsystem rather than an afterthought. | `Next.js` `LiveKit` `Prisma` `Postgres` `JWT` |
 | **[Tokyo Move-in Cost Calculator](https://apartmentfeesjapan.vercel.app)** · [src](https://github.com/jon-jc/apartmentfeesjapan) | Japanese leases front-load 4.5–6 months of rent. This models the entire 初期費用 stack — deposit, key money, agency, guarantor, insurance — against a choropleth of all 23 wards on live SUUMO / HOME'S data. Ward boundaries are compiled to ~28 KB of precomputed SVG paths at build time; 23 ward guides regenerate daily on ISR. Fully bilingual. | `Next.js` `TypeScript` `ISR` `i18n` |
