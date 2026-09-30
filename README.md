@@ -23,33 +23,28 @@
 
 ---
 
-## Kotoba Studio · ことば — bilingual voice AI and an agent desktop
+## SpillSense — environmental data platform & GIS
 
-**[github.com/jon-jc/kotoba-studio](https://github.com/jon-jc/kotoba-studio)** · [Screenshots & setup](https://github.com/jon-jc/kotoba-studio#english) · `Python` `TypeScript` `React` `PySide6` `ONNX`
+**[spillsense.vercel.app](https://spillsense.vercel.app)** · [src](https://github.com/jon-jc/spillsense) · `C#` `ASP.NET Core` `EF Core` `SQL Server / SQLite` `Leaflet`
 
-A Windows desktop workspace that connects Japanese and English speech to reviewable text,
-AI conversations and development tools. I extended DeepSeek Harness and integrated OpenWhispr
-components to bring voice input, multiple model providers and desktop workflows into one application.
+A spill incident data management and analytics platform for Washington State, modeled on how
+spill-response programs actually work rather than on what a CRUD scaffold produces.
 
-**Model selection belongs to each conversation.** Independent chats can use OpenAI, Anthropic Claude,
-Kimi, DeepSeek or local models concurrently. Provider and model controls are separate, the chat menu
-shows configured providers, and each conversation preserves its own selection. A code viewer,
-terminal and plugin system keep the surrounding development workflow close to the agent.
+**Auditable ETL intake.** Every row is validated against its full rule set at once, and rejected rows
+are *quarantined verbatim* with each failure reason attached rather than dropped — because the row
+someone has to fix is the row you just deleted. Re-importing a file is idempotent by natural key.
 
-**Local inference has an explicit setup flow.** English defaults to Parakeet; Japanese uses
-Kotoba-Whisper, with other Whisper models available. Missing weights trigger a download prompt and
-progress display before transcription starts. GGUF support through llama.cpp, plus Ollama and
-LM Studio connections, lets users choose local execution alongside cloud APIs.
+**Spatial validation at the boundary.** Statewide WGS 84 bounds catch swapped or malformed coordinates
+before they reach the database; all 39 counties are seeded with FIPS codes and Department of Ecology
+regional assignments, so geography is reference data rather than free text.
 
-**Voice stays reviewable before it becomes an action.** Capture a microphone, system audio or an
-application process; import a recording; or use a global hotkey for dictation at the cursor. Review
-names, numbers and intent before sending a transcript to an agent. Evaluation exposes Japanese CER,
-English WER, transcription latency and real-time factor against supplied reference text.
+**Two deployment targets, one contract.** An ASP.NET Core system of record owning the database and
+intake pipeline, plus a serverless read replica serving a published snapshot — held together by 109
+automated tests: xUnit integration tests running real migrations, and `node:test` contract tests that
+stop the two hosts drifting apart.
 
-**Delivery includes the desktop lifecycle.** The app ships as an installable Windows executable with
-English/Japanese controls, persistent chat views, user-selectable access policies and system-tray
-operation. Packaged-app checks cover actual Harness startup, workspace navigation, language switching
-and tray restoration, alongside focused UI and backend regression tests.
+<sub>Bounding-box spatial queries, RFC 7946 GeoJSON, statistical rollups, annual reports and CSV export across 11 OpenAPI-documented endpoints · clustered incident map, trend and substance analytics, URL-encoded shareable filter state, and an intake audit view</sub>
+
 
 ---
 
@@ -135,27 +130,34 @@ outage into fast 503s instead of a timeout queue; a three-phase drain keeps depl
 
 ---
 
-## SpillSense — environmental data platform & GIS
+## Kotoba Studio · ことば — bilingual voice AI and an agent desktop
 
-**[spillsense.vercel.app](https://spillsense.vercel.app)** · [src](https://github.com/jon-jc/spillsense) · `C#` `ASP.NET Core` `EF Core` `SQL Server / SQLite` `Leaflet`
+**[github.com/jon-jc/kotoba-studio](https://github.com/jon-jc/kotoba-studio)** · [Screenshots & setup](https://github.com/jon-jc/kotoba-studio#english) · `Python` `TypeScript` `React` `PySide6` `ONNX`
 
-A spill incident data management and analytics platform for Washington State, modeled on how
-spill-response programs actually work rather than on what a CRUD scaffold produces.
+A Windows desktop workspace that connects Japanese and English speech to reviewable text,
+AI conversations and development tools. I extended DeepSeek Harness and integrated OpenWhispr
+components to bring voice input, multiple model providers and desktop workflows into one application.
 
-**Auditable ETL intake.** Every row is validated against its full rule set at once, and rejected rows
-are *quarantined verbatim* with each failure reason attached rather than dropped — because the row
-someone has to fix is the row you just deleted. Re-importing a file is idempotent by natural key.
+**Model selection belongs to each conversation.** Independent chats can use OpenAI, Anthropic Claude,
+Kimi, DeepSeek or local models concurrently. Provider and model controls are separate, the chat menu
+shows configured providers, and each conversation preserves its own selection. A code viewer,
+terminal and plugin system keep the surrounding development workflow close to the agent.
 
-**Spatial validation at the boundary.** Statewide WGS 84 bounds catch swapped or malformed coordinates
-before they reach the database; all 39 counties are seeded with FIPS codes and Department of Ecology
-regional assignments, so geography is reference data rather than free text.
+**Local inference has an explicit setup flow.** English defaults to Parakeet; Japanese uses
+Kotoba-Whisper, with other Whisper models available. Missing weights trigger a download prompt and
+progress display before transcription starts. GGUF support through llama.cpp, plus Ollama and
+LM Studio connections, lets users choose local execution alongside cloud APIs.
 
-**Two deployment targets, one contract.** An ASP.NET Core system of record owning the database and
-intake pipeline, plus a serverless read replica serving a published snapshot — held together by 109
-automated tests: xUnit integration tests running real migrations, and `node:test` contract tests that
-stop the two hosts drifting apart.
+**Voice stays reviewable before it becomes an action.** Capture a microphone, system audio or an
+application process; import a recording; or use a global hotkey for dictation at the cursor. Review
+names, numbers and intent before sending a transcript to an agent. Evaluation exposes Japanese CER,
+English WER, transcription latency and real-time factor against supplied reference text.
 
-<sub>Bounding-box spatial queries, RFC 7946 GeoJSON, statistical rollups, annual reports and CSV export across 11 OpenAPI-documented endpoints · clustered incident map, trend and substance analytics, URL-encoded shareable filter state, and an intake audit view</sub>
+**Delivery includes the desktop lifecycle.** The app ships as an installable Windows executable with
+English/Japanese controls, persistent chat views, user-selectable access policies and system-tray
+operation. Packaged-app checks cover actual Harness startup, workspace navigation, language switching
+and tray restoration, alongside focused UI and backend regression tests.
+
 
 ---
 
