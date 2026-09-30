@@ -10,7 +10,7 @@
 
 <p align="center">
   TypeScript and React across the front end · streaming speech pipelines in Python ·<br>
-  event-driven ingestion in Go · .NET services over well-modeled data —<br>
+  event-driven ingestion in Go | .NET services over well-modeled data —<br>
   and the realtime clients, maps and dashboards that sit on top of them.
 </p>
 
