@@ -23,6 +23,36 @@
 
 ---
 
+## Fluxgate — distributed telemetry ingestion
+
+**[github.com/jon-jc/fluxgate](https://github.com/jon-jc/fluxgate)** · `Go` `GCP Pub/Sub` `PostgreSQL` `Cloud Run` `Terraform` `OpenTelemetry`
+
+Three stateless services that accept high-volume metric points over HTTP, publish them onto a durable
+event bus, aggregate them into event-time windows across a worker fleet, and serve the rollups back
+over a query API.
+
+**202 means the broker has it.** The response is withheld until Pub/Sub acknowledges. The faster
+answer is to buffer in-process and reply immediately — which is a lie about durability, told at
+exactly the moment durability is the whole product.
+
+**Exactly-once accumulation under redelivery**, via a delivery ledger keyed by `(batch, window)`
+where the rollup and the ledger entry commit in the same transaction. Redelivery is normal operation
+for a broker; double-counting a metric is not.
+
+**Partial success is reported, not rounded off.** One bad point returns which points landed and why
+the others didn't, rather than rejecting the batch and making the client bisect it.
+
+**Cardinality is bounded by construction** — labels come from route patterns, never raw paths, so a
+metrics backend can't be taken down by a caller with creative URLs. Circuit breakers turn a dependency
+outage into fast 503s instead of a timeout queue; a three-phase drain keeps deploys from shedding.
+
+<sub><b>8,970 points/s</b> sustained at p99 <b>60.7 ms</b> · watermark lag 4.2 s against a 10 s window · fuzz targets, integration tests against real services, and Terraform for the entire GCP footprint including per-service accounts, dead-lettering and four alert policies</sub>
+
+<sub>Bounding-box spatial queries, RFC 7946 GeoJSON, statistical rollups, annual reports and CSV export across 11 OpenAPI-documented endpoints · clustered incident map, trend and substance analytics, URL-encoded shareable filter state, and an intake audit view</sub>
+
+
+---
+
 ## SpillSense — environmental data platform & GIS
 
 **[spillsense.vercel.app](https://spillsense.vercel.app)** · [src](https://github.com/jon-jc/spillsense) · `C#` `ASP.NET Core` `EF Core` `SQL Server / SQLite` `Leaflet`
@@ -43,35 +73,7 @@ intake pipeline, plus a serverless read replica serving a published snapshot —
 automated tests: xUnit integration tests running real migrations, and `node:test` contract tests that
 stop the two hosts drifting apart.
 
-<sub>Bounding-box spatial queries, RFC 7946 GeoJSON, statistical rollups, annual reports and CSV export across 11 OpenAPI-documented endpoints · clustered incident map, trend and substance analytics, URL-encoded shareable filter state, and an intake audit view</sub>
 
-
----
-
-## 重ね Kasane — realtime Japanese→English video translation
-
-**[japanese-live-transcriber.vercel.app](https://japanese-live-transcriber.vercel.app)** · `Python` `FastAPI` `Celery` `Redis` `faster-whisper` `UniDic` `Next.js` `Docker`
-
-A self-hosted Japanese→English video translator. Subtitles publish *as* the video processes, and every
-synchronized Japanese word stays clickable for readings, definitions, confidence and contextual
-examples. The complete translation path runs in your own containers — no hosted model API, no key,
-no metered service.
-
-**Playback never waits for inference.** The worker prepares the first 12 seconds, then stays ahead
-with bounded overlapping audio windows pushed to the browser over SSE. Durable Redis snapshots and
-adaptive polling mean an interrupted connection recovers instead of restarting.
-
-**Morphology, because Japanese has no spaces.** Fugashi + UniDic tokenization drives a locally indexed
-JMdict lookup with Tatoeba example sentences — readings, Hepburn, parts of speech, bilingual SRT export.
-
-**Work is deduplicated at the fingerprint.** Public analyses are keyed by video ID and inference
-profile; concurrent requests for the same video share one in-flight task, tracking parameters don't
-fork it, and uploads never enter the shared cache.
-
-**Production ops, not a demo.** PRs run lint, types, builds, dependency audits, analyzer tests, Compose
-validation, container builds and a same-origin health smoke test. Merges publish immutable images to
-GHCR with OCI SBOMs and provenance; deploys are opt-in to a labeled self-hosted runner behind a
-protected environment, with Caddy terminating TLS and everything else on a private network.
 
 ---
 
@@ -103,30 +105,31 @@ Journey times are distance-based estimates, train movement is simulated, and exi
 
 ---
 
-## Fluxgate — distributed telemetry ingestion
+## 重ね Kasane — realtime Japanese→English video translation
 
-**[github.com/jon-jc/fluxgate](https://github.com/jon-jc/fluxgate)** · `Go` `GCP Pub/Sub` `PostgreSQL` `Cloud Run` `Terraform` `OpenTelemetry`
+**[japanese-live-transcriber.vercel.app](https://japanese-live-transcriber.vercel.app)** · `Python` `FastAPI` `Celery` `Redis` `faster-whisper` `UniDic` `Next.js` `Docker`
 
-Three stateless services that accept high-volume metric points over HTTP, publish them onto a durable
-event bus, aggregate them into event-time windows across a worker fleet, and serve the rollups back
-over a query API.
+A self-hosted Japanese→English video translator. Subtitles publish *as* the video processes, and every
+synchronized Japanese word stays clickable for readings, definitions, confidence and contextual
+examples. The complete translation path runs in your own containers — no hosted model API, no key,
+no metered service.
 
-**202 means the broker has it.** The response is withheld until Pub/Sub acknowledges. The faster
-answer is to buffer in-process and reply immediately — which is a lie about durability, told at
-exactly the moment durability is the whole product.
+**Playback never waits for inference.** The worker prepares the first 12 seconds, then stays ahead
+with bounded overlapping audio windows pushed to the browser over SSE. Durable Redis snapshots and
+adaptive polling mean an interrupted connection recovers instead of restarting.
 
-**Exactly-once accumulation under redelivery**, via a delivery ledger keyed by `(batch, window)`
-where the rollup and the ledger entry commit in the same transaction. Redelivery is normal operation
-for a broker; double-counting a metric is not.
+**Morphology, because Japanese has no spaces.** Fugashi + UniDic tokenization drives a locally indexed
+JMdict lookup with Tatoeba example sentences — readings, Hepburn, parts of speech, bilingual SRT export.
 
-**Partial success is reported, not rounded off.** One bad point returns which points landed and why
-the others didn't, rather than rejecting the batch and making the client bisect it.
+**Work is deduplicated at the fingerprint.** Public analyses are keyed by video ID and inference
+profile; concurrent requests for the same video share one in-flight task, tracking parameters don't
+fork it, and uploads never enter the shared cache.
 
-**Cardinality is bounded by construction** — labels come from route patterns, never raw paths, so a
-metrics backend can't be taken down by a caller with creative URLs. Circuit breakers turn a dependency
-outage into fast 503s instead of a timeout queue; a three-phase drain keeps deploys from shedding.
+**Production ops, not a demo.** PRs run lint, types, builds, dependency audits, analyzer tests, Compose
+validation, container builds and a same-origin health smoke test. Merges publish immutable images to
+GHCR with OCI SBOMs and provenance; deploys are opt-in to a labeled self-hosted runner behind a
+protected environment, with Caddy terminating TLS and everything else on a private network.
 
-<sub><b>8,970 points/s</b> sustained at p99 <b>60.7 ms</b> · watermark lag 4.2 s against a 10 s window · fuzz targets, integration tests against real services, and Terraform for the entire GCP footprint including per-service accounts, dead-lettering and four alert policies</sub>
 
 ---
 
