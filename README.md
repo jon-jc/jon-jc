@@ -1,7 +1,7 @@
 <h1 align="center">Jonathan Cho</h1>
 
 <p align="center">
-  <b>Backend &amp; AI systems engineer — English / 日本語</b>
+  <b>Full-Stack &amp; AI systems engineer — English / 日本語</b>
 </p>
 
 <p align="center">
